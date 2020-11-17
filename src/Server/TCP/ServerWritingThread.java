@@ -1,4 +1,7 @@
-package stream;
+package Server.TCP;
+
+import util.Historique;
+import util.Message;
 
 import java.io.*;
 import java.net.*;

@@ -5,7 +5,9 @@
  * Authors:
  */
 
-package stream;
+package Server.TCP;
+
+import util.Message;
 
 import java.io.*;
 import java.net.*;

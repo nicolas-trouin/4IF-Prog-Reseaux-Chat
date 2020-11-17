@@ -1,4 +1,4 @@
-package stream;
+package Client.TCP;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
