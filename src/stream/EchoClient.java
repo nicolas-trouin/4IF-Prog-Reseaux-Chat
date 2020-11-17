@@ -30,10 +30,6 @@ public class EchoClient {
         try {
             // creation socket ==> connexion
             echoSocket = new Socket(args[0], Integer.parseInt(args[1]));
-            socIn = new BufferedReader(
-                    new InputStreamReader(echoSocket.getInputStream()));
-            socOut = new PrintStream(echoSocket.getOutputStream());
-            stdIn = new BufferedReader(new InputStreamReader(System.in));
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host:" + args[0]);
             System.exit(1);
@@ -45,17 +41,12 @@ public class EchoClient {
 
         System.out.println("Connected to "+echoSocket.getLocalAddress().toString());
 
-        String line;
-        while (true) {
-            line = stdIn.readLine();
-            if (line.equals(".")) break;
-            socOut.println(line);
-            System.out.println("echo: " + socIn.readLine());
-        }
-        socOut.close();
-        socIn.close();
-        stdIn.close();
-        echoSocket.close();
+        ClientListeningThread listeningThread = new ClientListeningThread(echoSocket);
+        listeningThread.start();
+        ClientWritingThread writingThread = new ClientWritingThread(echoSocket);
+        writingThread.start();
+
+//        echoSocket.close();
     }
 }
 
