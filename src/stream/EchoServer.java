@@ -26,6 +26,7 @@ public class EchoServer {
             while (true) {
                 String line = socIn.readLine();
                 socOut.println(line);
+                System.out.println(clientSocket.getLocalAddress().toString() + " : " + line);
             }
         } catch (Exception e) {
             System.err.println("Error in EchoServer:" + e);
@@ -34,8 +35,6 @@ public class EchoServer {
 
     /**
      * main method
-     *
-     * @param EchoServer port
      **/
     public static void main(String args[]) {
         ServerSocket listenSocket;

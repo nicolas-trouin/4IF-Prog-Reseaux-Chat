@@ -11,8 +11,6 @@ import java.net.*;
 
 
 public class EchoClient {
-
-
     /**
      * main method
      * accepts a connection, receives a message from client then sends an echo to the client
@@ -44,6 +42,8 @@ public class EchoClient {
                     + "the connection to:" + args[0]);
             System.exit(1);
         }
+
+        System.out.println("Connected to "+echoSocket.getLocalAddress().toString());
 
         String line;
         while (true) {
