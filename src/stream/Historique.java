@@ -15,12 +15,8 @@ public class Historique {
         return messages;
     }
 
-    public List<Message> getLastMessages() {
-        return messages.subList(messages.size()-10,messages.size());
-    }
-
-    public Message getLastMessage() {
-        return messages.get(messages.size()-1);
+    public Message getLastMessage(int nbNewMessages) {
+        return messages.get(messages.size()-nbNewMessages);
     }
 
     public void addMessage(Message message){

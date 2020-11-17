@@ -10,8 +10,7 @@ package stream;
 import java.io.*;
 import java.net.*;
 
-public class ServerListeningThread
-        extends Thread {
+public class ServerListeningThread extends Thread {
 
     private Socket clientSocket;
 
@@ -31,9 +30,8 @@ public class ServerListeningThread
             while (true) {
                 String line = socIn.readLine();
                 Message message = new Message(line, clientSocket.getInetAddress().toString());
-                EchoServerMultiThreaded.getHistorique().addMessage(message);
                 for (ServerWritingThread serverWritingThread : EchoServerMultiThreaded.getServerWritingThreads()) {
-                    serverWritingThread.notify();
+                    serverWritingThread.addMessage(message);
                 }
                 System.out.println(line);
             }
