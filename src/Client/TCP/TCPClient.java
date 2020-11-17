@@ -1,5 +1,5 @@
 /***
- * EchoClient
+ * TCPClient
  * Example of a TCP client 
  * Date: 10/01/04
  * Authors:
@@ -10,7 +10,7 @@ import java.io.*;
 import java.net.*;
 
 
-public class EchoClient {
+public class TCPClient {
     /**
      * main method
      * accepts a connection, receives a message from client then sends an echo to the client
@@ -23,7 +23,7 @@ public class EchoClient {
         BufferedReader socIn = null;
 
         if (args.length != 2) {
-            System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port>");
+            System.out.println("Usage: java TCPClient <EchoServer host> <EchoServer port>");
             System.exit(1);
         }
 

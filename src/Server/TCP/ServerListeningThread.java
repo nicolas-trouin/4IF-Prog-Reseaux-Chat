@@ -32,7 +32,7 @@ public class ServerListeningThread extends Thread {
             while (true) {
                 String line = socIn.readLine();
                 Message message = new Message(line, clientSocket.getInetAddress().toString());
-                for (ServerWritingThread serverWritingThread : EchoServerMultiThreaded.getServerWritingThreads()) {
+                for (ServerWritingThread serverWritingThread : TCPServerMultiThreaded.getServerWritingThreads()) {
                     serverWritingThread.addMessage(message);
                 }
                 System.out.println(line);

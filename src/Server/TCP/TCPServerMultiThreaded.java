@@ -13,7 +13,7 @@ import java.net.*;
 import java.util.List;
 import java.util.Vector;
 
-public class EchoServerMultiThreaded {
+public class TCPServerMultiThreaded {
 
 	private static List<ServerWritingThread> serverWritingThreadList = new Vector<>();
 	private static Historique historique;
