@@ -14,10 +14,13 @@ import java.net.*;
 
 public class ServerListeningThread extends Thread {
 
-    private Socket clientSocket;
+    private final Socket clientSocket;
+    private String senderName = "anonymous";
+    private final ServerWritingThread writingThread;
 
-    ServerListeningThread(Socket s) {
+    ServerListeningThread(Socket s, ServerWritingThread writingThread) {
         this.clientSocket = s;
+        this.writingThread = writingThread;
     }
 
     /**
@@ -31,9 +34,31 @@ public class ServerListeningThread extends Thread {
                     new InputStreamReader(clientSocket.getInputStream()));
             while (true) {
                 String line = socIn.readLine();
-                Message message = new Message(line, clientSocket.getInetAddress().toString());
-                for (ServerWritingThread serverWritingThread : TCPServerMultiThreaded.getServerWritingThreads()) {
-                    serverWritingThread.addMessage(message);
+                if(line.charAt(0) == '/'){
+                    Message response;
+                    String[] command = line.split(" ");
+                    if(command[0].equals("/rename")){
+                        if(command.length != 2){
+                            response = new Message("Syntax error. Try /rename <name>.", "[SERVER]");
+                        }
+                        else {
+                            senderName = command[1];
+                            response = new Message("Your name has been changed to " + senderName + ".", "[SERVER]");
+                        }
+                    }
+                    else if(command[0].equals("/help")){
+                        response = new Message("WRITE HELP MESSAGE HERE", "[SERVER]"); //TODO Write help message
+                    }
+                    else {
+                        response = new Message("Syntax error. Try /help to get help.", "[SERVER]");
+                    }
+                    writingThread.addMessage(response);
+                }
+                else {
+                    Message message = new Message(line, senderName);
+                    for (ServerWritingThread serverWritingThread : TCPServerMultiThreaded.getServerWritingThreads()) {
+                        serverWritingThread.addMessage(message);
+                    }
                 }
                 System.out.println(line);
             }

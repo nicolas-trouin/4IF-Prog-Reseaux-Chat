@@ -31,18 +31,18 @@ public class UDPClient {
         DatagramSocket clientSock = new DatagramSocket();
         byte[] buf = new byte[256];
         // Build a request
-        initialize buf ...
+//        initialize buf ...
         // Create a datagram packet destined for the
         // server
-        DatagramPacket packet = new DatagramPacket(buf, buf.length, serverAddr, serverPort);
+//        DatagramPacket packet = new DatagramPacket(buf, buf.length, serverAddr, serverPort);
         // Send datagram packet to server
-        clientSock.send(packet);
+//        clientSock.send(packet);
         // Build a datagram packet for response
-        packet = new DatagramPacket(buf, buf.length);
+//        packet = new DatagramPacket(buf, buf.length);
         // Receive response
-        clientSock.receive(packet);
-        String received = new String(packet.getData(), 0, packet.getLength());
-        System.out.println("Response: " + received);
+//        clientSock.receive(packet);
+//        String received = new String(packet.getData(), 0, packet.getLength());
+//        System.out.println("Response: " + received);
     }
 }
 

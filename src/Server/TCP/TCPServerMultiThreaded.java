@@ -40,7 +40,7 @@ public class TCPServerMultiThreaded {
                 ServerWritingThread writingThread = new ServerWritingThread(clientSocket);
                 writingThread.start();
                 serverWritingThreadList.add(writingThread);
-                ServerListeningThread listeningThread = new ServerListeningThread(clientSocket);
+                ServerListeningThread listeningThread = new ServerListeningThread(clientSocket, writingThread);
                 listeningThread.start();
             }
         } catch (Exception e) {

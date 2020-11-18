@@ -16,7 +16,7 @@ import java.util.Vector;
 
 public class UDPServerMultiThreaded {
 
-    private static List<ServerWritingThread> serverWritingThreadList = new Vector<>();
+//    private static List<ServerWritingThread> serverWritingThreadList = new Vector<>();
     private static Historique historique;
 
     /**
@@ -49,19 +49,19 @@ public class UDPServerMultiThreaded {
                 InetAddress clientAddr = packet.getAddress();
                 int clientPort = packet.getPort();
                 // Build a response
-                initialize buf ...
+                //initialize buf ...
                 // Build a datagram packet for response
-                packet = new DatagramPacket(buf, buf.length, clientAddr, clientPort);
+                //packet = new DatagramPacket(buf, buf.length, clientAddr, clientPort);
                 // Send a response
-                serverSocket.send(packet);
+                //serverSocket.send(packet);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-        public static List<ServerWritingThread> getServerWritingThreads () {
-            return serverWritingThreadList;
-        }
+//        public static List<ServerWritingThread> getServerWritingThreads () {
+//            return serverWritingThreadList;
+//        }
 
         public static Historique getHistorique () {
             return historique;
