@@ -16,7 +16,7 @@ import java.util.Vector;
 
 public class UDPServerMultiThreaded {
 
-//    private static List<ServerWritingThread> serverWritingThreadList = new Vector<>();
+    //    private static List<ServerWritingThread> serverWritingThreadList = new Vector<>();
     private static Historique historique;
 
     /**
@@ -25,47 +25,35 @@ public class UDPServerMultiThreaded {
      * @param args port
      **/
     public static synchronized void main(String args[]) {
-        ServerSocket listenSocket;
         historique = new Historique();
 
-        if (args.length != 1) {
-            System.out.println("Usage: java EchoServer <EchoServer port>");
+        if (args.length != 3) {
+            System.out.println("Usage: java UDPServerMultiThreaded <Server port> <Multicast address> <Multicast port>");
             System.exit(1);
         }
-        // Create a datagram socket associated
-        // with the server port
-        DatagramSocket serverSocket = null;
+
         try {
-            serverSocket = new DatagramSocket(Integer.parseInt(args[0]));
-            System.out.println("Server ready...");
-            while (true) {
-                System.out.println("Waiting for client packet…");
-                byte[] buf = new byte[256];
-                // Create a datagram packet
-                DatagramPacket packet = new DatagramPacket(buf, buf.length);
-                // Wait for a packet
-                serverSocket.receive(packet);
-                // Get client IP address and port number
-                InetAddress clientAddr = packet.getAddress();
-                int clientPort = packet.getPort();
-                // Build a response
-                //initialize buf ...
-                // Build a datagram packet for response
-                //packet = new DatagramPacket(buf, buf.length, clientAddr, clientPort);
-                // Send a response
-                //serverSocket.send(packet);
-            }
+            int serverPort = Integer.parseInt(args[0]);
+            InetAddress multicastAddress = InetAddress.getByName(args[1]);
+            int multicastPort = Integer.parseInt(args[2]);
+
+            MulticastSocket multicastSocket = new MulticastSocket();
+            ServerWritingThread serverWritingThread = new ServerWritingThread(multicastSocket, multicastAddress, multicastPort);
+            serverWritingThread.start();
+
+            DatagramSocket listeningSocket = new DatagramSocket(serverPort);
+            ServerListeningThread serverListeningThread = new ServerListeningThread(listeningSocket,serverWritingThread, multicastAddress, multicastPort);
+            serverListeningThread.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-//        public static List<ServerWritingThread> getServerWritingThreads () {
-//            return serverWritingThreadList;
-//        }
 
-        public static Historique getHistorique () {
-            return historique;
-        }
+
     }
+
+    public static Historique getHistorique() {
+        return historique;
+    }
+}
 
   
