@@ -23,7 +23,7 @@ public class TCPClient {
         BufferedReader socIn = null;
 
         if (args.length != 2) {
-            System.out.println("Usage: java TCPClient <EchoServer host> <EchoServer port>");
+            System.out.println("Usage: java TCPClient <Server host> <Server port>");
             System.exit(1);
         }
 
@@ -39,7 +39,7 @@ public class TCPClient {
             System.exit(1);
         }
 
-        System.out.println("Connected to "+echoSocket.getLocalAddress().toString());
+        System.out.println("Connected to " + echoSocket.getLocalAddress().toString());
 
         ClientListeningThread listeningThread = new ClientListeningThread(echoSocket);
         listeningThread.start();
