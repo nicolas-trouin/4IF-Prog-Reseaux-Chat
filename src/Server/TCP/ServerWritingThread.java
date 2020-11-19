@@ -1,4 +1,7 @@
-package stream;
+package Server.TCP;
+
+import util.Historique;
+import util.Message;
 
 import java.io.*;
 import java.net.*;
@@ -36,10 +39,10 @@ public class ServerWritingThread
      **/
     public synchronized void run() {
         try {
-            PrintStream socOut = new PrintStream(clientSocket.getOutputStream());
+            ObjectOutputStream socOut = new ObjectOutputStream(clientSocket.getOutputStream());
             while (true) {
                 Message message = this.getMessage();
-                socOut.println(message);
+                socOut.writeObject(message);
             }
         } catch (Exception e) {
             System.err.println("Error in EchoServer:" + e);

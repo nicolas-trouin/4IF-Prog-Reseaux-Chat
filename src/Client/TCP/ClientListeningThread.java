@@ -1,15 +1,21 @@
-package stream;
+package Client.TCP;
+
+import GUI.ChatFrame;
+import util.Message;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 
 public class ClientListeningThread extends Thread {
 
     private Socket serverSocket;
+    private ChatFrame chatFrame;
 
-    ClientListeningThread(Socket s) {
+    ClientListeningThread(Socket s, ChatFrame chatFrame) {
         this.serverSocket = s;
+        this.chatFrame = chatFrame;
     }
 
     /**
@@ -18,13 +24,10 @@ public class ClientListeningThread extends Thread {
      **/
     public void run() {
         try {
-            BufferedReader socIn = null;
-            socIn = new BufferedReader(
-                    new InputStreamReader(serverSocket.getInputStream()));
+            ObjectInputStream socIn = new ObjectInputStream (serverSocket.getInputStream());
             while (true) {
-                String line = socIn.readLine();
-//                Message message = new Message(line, serverSocket.getInetAddress().toString());
-                System.out.println(line);
+                Message message = (Message) socIn.readObject();
+                chatFrame.displayText(message);
             }
         } catch (Exception e) {
             System.err.println("Error in EchoServer:" + e);
