@@ -56,14 +56,33 @@ public class ChatFrame extends Frame {
 
                         String line = messageField.getText();
                         messageField.setText("");
-                        Message message = new Message(line, name);
 
-                        objectOutputStream.writeObject(message);
-                        data = byteArrayOutputStream.toByteArray();
+                        if (line.charAt(0) == '/') {
+                            Message response;
+                            String[] command = line.split(" ");
+                            if (command[0].equals("/rename")) {
+                                if (command.length != 2) {
+                                    response = new Message("Syntax error. Try /rename <name>.", "[INFO]");
+                                } else {
+                                    name = command[1];
+                                    response = new Message("Your name has been changed to " + name + ".", "[INFO]");
+                                }
+                            } else if (command[0].equals("/help")) {
+                                response = new Message("WRITE HELP MESSAGE HERE", "[INFO]"); //TODO Write help message
+                            } else {
+                                response = new Message("Syntax error. Try /help to get help.", "[INFO]");
+                            }
+                            displayText(response);
+                        } else {
 
-                        DatagramPacket datagramPacket = new DatagramPacket(data, data.length, serverHost, serverPort);
-                        serverSocket.send(datagramPacket);
+                            Message message = new Message(line, name);
 
+                            objectOutputStream.writeObject(message);
+                            data = byteArrayOutputStream.toByteArray();
+
+                            DatagramPacket datagramPacket = new DatagramPacket(data, data.length, serverHost, serverPort);
+                            serverSocket.send(datagramPacket);
+                        }
                     } catch (Exception exception) {
                         System.err.println("Error in ChatFrame:" + exception);
                         exception.printStackTrace();
