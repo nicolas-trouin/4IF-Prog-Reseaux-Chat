@@ -11,8 +11,6 @@ import util.Historique;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.List;
-import java.util.Vector;
 
 public class UDPServerMultiThreaded {
 
@@ -38,7 +36,7 @@ public class UDPServerMultiThreaded {
             int multicastPort = Integer.parseInt(args[2]);
 
             MulticastSocket multicastSocket = new MulticastSocket();
-            ServerWritingThread serverWritingThread = new ServerWritingThread(multicastSocket, multicastAddress, multicastPort);
+            ServerWritingThread serverWritingThread = new ServerWritingThread(multicastSocket, multicastAddress, multicastPort, historique);
             serverWritingThread.start();
 
             DatagramSocket listeningSocket = new DatagramSocket(serverPort);

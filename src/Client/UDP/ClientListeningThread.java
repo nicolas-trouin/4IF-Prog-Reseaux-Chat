@@ -7,19 +7,18 @@ import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.MulticastSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class ClientListeningThread extends Thread {
 
     private final MulticastSocket multicastSocket;
+    private ChatFrame chatFrame;
 
-    ClientListeningThread(MulticastSocket s) {
+    ClientListeningThread(MulticastSocket s, ChatFrame chatFrame) {
         this.multicastSocket = s;
-        System.out.println("Listener created");
+        this.chatFrame = chatFrame;
     }
 
-    /**
-     * //TODO
-     **/
     public void run() {
         try {
             Message message;
@@ -36,7 +35,7 @@ public class ClientListeningThread extends Thread {
 
                 try {
                     message = (Message) objectInputStream.readObject();
-                    System.out.println(message);
+                    chatFrame.displayText(message);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }

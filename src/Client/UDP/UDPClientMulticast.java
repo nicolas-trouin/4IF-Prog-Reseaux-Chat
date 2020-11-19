@@ -2,9 +2,11 @@ package Client.UDP;
 
 import util.Message;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.*;
-import java.util.Arrays;
+import java.util.List;
 
 import static java.lang.System.exit;
 
@@ -24,6 +26,8 @@ public class UDPClientMulticast {
 
         InetAddress host = InetAddress.getByName(args[0]);
         int port = Integer.parseInt(args[1]);
+
+        List<Message> messagesHistory = null;
 
         try {
             sendSocket = new DatagramSocket();
@@ -57,6 +61,19 @@ public class UDPClientMulticast {
                 e.printStackTrace();
                 exit(1);
             }
+
+            dataReceived = new byte[1000];
+            DatagramPacket history = new DatagramPacket(dataReceived, dataReceived.length);
+            sendSocket.receive(history);
+
+            byteArrayInputStream = new ByteArrayInputStream(dataReceived);
+            objectInputStream = new ObjectInputStream(byteArrayInputStream);
+
+            try {
+                messagesHistory = (List<Message>) objectInputStream.readObject();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         } catch (SocketException e) {
             e.printStackTrace();
             exit(1);
@@ -71,9 +88,25 @@ public class UDPClientMulticast {
         }
         //System.out.println(multicastSocket);
 
-        ClientWritingThread clientWritingThread = new ClientWritingThread(sendSocket, host, port);
-        clientWritingThread.start();
-        ClientListeningThread clientListeningThread = new ClientListeningThread(receiveSocket);
+        ChatFrame mainFrame = new ChatFrame(sendSocket, host, port);
+        mainFrame.setVisible(true);
+
+        mainFrame.addWindowListener(
+                new WindowAdapter() {
+                    public void windowClosing(WindowEvent we) {
+                        mainFrame.dispose();
+                    }
+                }
+        );
+
+        assert messagesHistory != null;
+        for (Message m : messagesHistory) {
+            mainFrame.displayText(m);
+        }
+
+//        ClientWritingThread clientWritingThread = new ClientWritingThread(sendSocket, host, port);
+//        clientWritingThread.start();
+        ClientListeningThread clientListeningThread = new ClientListeningThread(receiveSocket, mainFrame);
         clientListeningThread.start();
 
         //multicastSocket.leaveGroup(groupAddr);

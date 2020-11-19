@@ -13,7 +13,9 @@ import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ServerListeningThread extends Thread {
 
@@ -60,9 +62,21 @@ public class ServerListeningThread extends Thread {
                             byteArrayOutputStream = new ByteArrayOutputStream();
                             objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
                             objectOutputStream.writeObject(response);
-                            byte[] dataSent = byteArrayOutputStream.toByteArray();
+                            byte[] responseData = byteArrayOutputStream.toByteArray();
 
-                            listeningSocket.send(new DatagramPacket(dataSent, dataSent.length, datagramPacket.getAddress(), datagramPacket.getPort()));
+                            listeningSocket.send(new DatagramPacket(responseData, responseData.length, datagramPacket.getAddress(), datagramPacket.getPort()));
+
+                            //Sending history
+
+                            List<Message> history = UDPServerMultiThreaded.getHistorique().getMessages();
+
+                            byteArrayOutputStream = new ByteArrayOutputStream();
+                            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+                            objectOutputStream.writeObject(history);
+                            byte[] historyData = byteArrayOutputStream.toByteArray();
+
+                            listeningSocket.send(new DatagramPacket(historyData, historyData.length, datagramPacket.getAddress(), datagramPacket.getPort()));
+
                         }
                         else {
                             writingThread.addMessage(message);
