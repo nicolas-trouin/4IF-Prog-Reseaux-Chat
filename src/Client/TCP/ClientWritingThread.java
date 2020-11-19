@@ -27,7 +27,8 @@ public class ClientWritingThread extends Thread {
                     socOut.println(line);
             }
         } catch (Exception e) {
-            System.err.println("Error in EchoServer:" + e);
+            System.err.println("Error in ClientWritingThread:" + e);
+            e.printStackTrace();
         }
     }
 }

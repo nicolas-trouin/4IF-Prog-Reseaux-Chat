@@ -30,7 +30,8 @@ public class ClientListeningThread extends Thread {
                 chatFrame.displayText(message);
             }
         } catch (Exception e) {
-            System.err.println("Error in EchoServer:" + e);
+            System.err.println("Error in ClientListeningThread:" + e);
+            e.printStackTrace();
         }
     }
 }

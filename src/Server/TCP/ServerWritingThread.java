@@ -5,22 +5,24 @@ import util.Message;
 
 import java.io.*;
 import java.net.*;
+import java.util.List;
 
-public class ServerWritingThread
-        extends Thread {
+public class ServerWritingThread extends Thread {
 
     private Socket clientSocket;
-    private Historique historique = new Historique();
+    private Historique historique;
     private int newMessages = 0;
+    private ObjectOutputStream socOut;
 
-    public synchronized void addMessage(Message message){
+    public synchronized void addMessage(Message message) {
+        System.out.println(this.historique);
         this.historique.addMessage(message);
         ++newMessages;
         this.notify();
     }
 
-    private synchronized Message getMessage(){
-        while(newMessages == 0){
+    private synchronized Message getMessage() {
+        while (newMessages == 0) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -30,22 +32,33 @@ public class ServerWritingThread
         return this.historique.getLastMessage(newMessages--);
     }
 
-    ServerWritingThread(Socket s) {
+    ServerWritingThread(Socket s, Historique historique) {
         this.clientSocket = s;
+        this.historique = new Historique(historique);
+        init();
     }
 
-    /**
-     * receives a request from client then sends an echo to the client
-     **/
+    private void init() {
+        List<Message> messages = this.historique.getMessages();
+        try {
+            this.socOut = new ObjectOutputStream(clientSocket.getOutputStream());
+            for (Message message : messages) {
+                socOut.writeObject(message);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public synchronized void run() {
         try {
-            ObjectOutputStream socOut = new ObjectOutputStream(clientSocket.getOutputStream());
             while (true) {
                 Message message = this.getMessage();
                 socOut.writeObject(message);
             }
         } catch (Exception e) {
-            System.err.println("Error in EchoServer:" + e);
+            System.err.println("Error in ServerWritingThread:" + e);
+            e.printStackTrace();
         }
     }
 

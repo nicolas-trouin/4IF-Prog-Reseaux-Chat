@@ -56,6 +56,7 @@ public class ServerListeningThread extends Thread {
                 }
                 else {
                     Message message = new Message(line, senderName);
+                    TCPServerMultiThreaded.addMessageToHistorique(message);
                     for (ServerWritingThread serverWritingThread : TCPServerMultiThreaded.getServerWritingThreads()) {
                         serverWritingThread.addMessage(message);
                     }
@@ -63,7 +64,8 @@ public class ServerListeningThread extends Thread {
                 System.out.println(line);
             }
         } catch (Exception e) {
-            System.err.println("Error in EchoServer:" + e);
+            System.err.println("Error in ServerListeningThread:" + e);
+            e.printStackTrace();
         }
     }
 

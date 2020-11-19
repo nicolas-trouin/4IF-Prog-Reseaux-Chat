@@ -8,6 +8,7 @@
 package Server.TCP;
 
 import util.Historique;
+import util.Message;
 
 import java.net.*;
 import java.util.List;
@@ -37,7 +38,7 @@ public class TCPServerMultiThreaded {
             while (true) {
                 Socket clientSocket = listenSocket.accept();
                 System.out.println("Connexion from:" + clientSocket.getInetAddress());
-                ServerWritingThread writingThread = new ServerWritingThread(clientSocket);
+                ServerWritingThread writingThread = new ServerWritingThread(clientSocket, historique);
                 writingThread.start();
                 serverWritingThreadList.add(writingThread);
                 ServerListeningThread listeningThread = new ServerListeningThread(clientSocket, writingThread);
@@ -52,8 +53,9 @@ public class TCPServerMultiThreaded {
         return serverWritingThreadList;
     }
 
-    public static Historique getHistorique() {
-        return historique;
+    public static void addMessageToHistorique(Message message) {
+        historique.addMessage(message);
+        System.out.println(historique.getMessages());
     }
 }
 

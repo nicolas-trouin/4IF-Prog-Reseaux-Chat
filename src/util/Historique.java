@@ -11,6 +11,10 @@ public class Historique {
         this.messages = new Vector<>();
     }
 
+    public Historique(Historique historique){
+        this.messages = historique.messages;
+    }
+
     public List<Message> getMessages() {
         return messages;
     }
