@@ -1,4 +1,4 @@
-package GUI;
+package Client.TCP;
 
 import util.Message;
 
@@ -51,8 +51,7 @@ public class ChatFrame extends Frame {
                     //Envoyer le message au serveur
                     try {
                         PrintStream socOut = new PrintStream(serverSocket.getOutputStream());
-                        String line;
-                        line = messageField.getText();
+                        String line = messageField.getText();
                         messageField.setText("");
                         socOut.println(line);
                     } catch (IOException ioException) {

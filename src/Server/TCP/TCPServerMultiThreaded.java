@@ -55,7 +55,7 @@ public class TCPServerMultiThreaded {
 
     public static void addMessageToHistorique(Message message) {
         historique.addMessage(message);
-        System.out.println(historique.getMessages());
+        //System.out.println(historique.getMessages());
     }
 }
 

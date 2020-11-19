@@ -15,7 +15,6 @@ public class ServerWritingThread extends Thread {
     private ObjectOutputStream socOut;
 
     public synchronized void addMessage(Message message) {
-        System.out.println(this.historique);
         this.historique.addMessage(message);
         ++newMessages;
         this.notify();

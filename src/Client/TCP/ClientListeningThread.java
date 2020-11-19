@@ -1,10 +1,7 @@
 package Client.TCP;
 
-import GUI.ChatFrame;
 import util.Message;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
