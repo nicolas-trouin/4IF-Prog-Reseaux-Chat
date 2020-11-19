@@ -6,6 +6,10 @@
  */
 package Client.TCP;
 
+import GUI.ChatFrame;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.*;
 
@@ -17,10 +21,7 @@ public class TCPClient {
      **/
     public static void main(String[] args) throws IOException {
 
-        Socket echoSocket = null;
-        PrintStream socOut = null;
-        BufferedReader stdIn = null;
-        BufferedReader socIn = null;
+        Socket serverSocket = null;
 
         if (args.length != 2) {
             System.out.println("Usage: java TCPClient <Server host> <Server port>");
@@ -29,7 +30,7 @@ public class TCPClient {
 
         try {
             // creation socket ==> connexion
-            echoSocket = new Socket(args[0], Integer.parseInt(args[1]));
+            serverSocket = new Socket(args[0], Integer.parseInt(args[1]));
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host:" + args[0]);
             System.exit(1);
@@ -39,12 +40,23 @@ public class TCPClient {
             System.exit(1);
         }
 
-        System.out.println("Connected to " + echoSocket.getLocalAddress().toString());
+        System.out.println("Connected to " + serverSocket.getLocalAddress().toString());
 
-        ClientListeningThread listeningThread = new ClientListeningThread(echoSocket);
+        ChatFrame mainFrame = new ChatFrame(serverSocket);
+        mainFrame.setVisible(true);
+
+        mainFrame.addWindowListener(
+                new WindowAdapter() {
+                    public void windowClosing(WindowEvent we) {
+                        mainFrame.dispose();
+                    }
+                }
+        );
+
+        ClientListeningThread listeningThread = new ClientListeningThread(serverSocket, mainFrame);
         listeningThread.start();
-        ClientWritingThread writingThread = new ClientWritingThread(echoSocket);
-        writingThread.start();
+        //ClientWritingThread writingThread = new ClientWritingThread(serverSocket);
+        //writingThread.start();
 
 //        echoSocket.close();
     }

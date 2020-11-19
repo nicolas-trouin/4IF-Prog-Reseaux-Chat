@@ -1,6 +1,13 @@
 package GUI;
 
+import util.Message;
+
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -8,8 +15,10 @@ public class ChatFrame extends Frame {
     Button validationButton = new Button();
     TextField messageField = new TextField();
     TextArea displayArea = new TextArea();
+    Socket serverSocket;
 
-    public ChatFrame() {
+    public ChatFrame(Socket serverSocket) {
+        this.serverSocket = serverSocket;
         initialize();
     }
 
@@ -38,16 +47,21 @@ public class ChatFrame extends Frame {
         validationButton.addActionListener(
                 // lambda-function for action on validation button
                 e -> {
-                    displayText();
+//                    displayText();
+                    //Envoyer le message au serveur
+                    try {
+                        PrintStream socOut = new PrintStream(serverSocket.getOutputStream());
+                        String line;
+                        line = messageField.getText();
+                        messageField.setText("");
+                        socOut.println(line);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                 });
-
-
     }
 
-    public void displayText() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("[dd/MM/yyyy] HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        String message = messageField.getText();
-        displayArea.append("<anonymous> @ " + dtf.format(now) + "\n" + message + "\n\n");
+    public void displayText(Message message) {
+        displayArea.append(message + "\n");
     }
 }
