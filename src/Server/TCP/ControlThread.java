@@ -20,7 +20,7 @@ public class ControlThread extends Thread {
             try {
                 line = stdin.readLine();
                 if(line.equals("quit")) {
-                    history.saveToFile("history.txt");
+                    history.saveToFile("history.ser");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
