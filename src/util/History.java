@@ -92,6 +92,7 @@ public class History implements Serializable {
             fileInputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
+            this.messages = new ArrayList<>();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
