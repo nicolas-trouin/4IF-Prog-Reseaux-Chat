@@ -26,7 +26,7 @@ public class TCPServerMultiThreaded {
      **/
     public static synchronized void main(String args[]) {
         ServerSocket listenSocket;
-        history = new History("history.ser");
+        history = new History("historyTCP.ser");
 
         if (args.length != 1) {
             System.out.println("Usage: java EchoServer <EchoServer port>");

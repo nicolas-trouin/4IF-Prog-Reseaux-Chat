@@ -20,7 +20,7 @@ public class ControlThread extends Thread {
             try {
                 line = stdin.readLine();
                 if(line.equals("save")) {
-                    history.saveToFile("history.ser");
+                    history.saveToFile("historyTCP.ser");
                 }
                 else {
                     System.out.println("Type 'save' in order to save the history of messages");

@@ -25,7 +25,7 @@ public class UDPServerMultiThreaded {
      * @param args port
      **/
     public static synchronized void main(String args[]) {
-        history = new History();
+        history = new History("historyUDP.ser");
 
         if (args.length != 3) {
             System.out.println("Usage: java UDPServerMultiThreaded <Server port> <Multicast address> <Multicast port>");
@@ -52,7 +52,7 @@ public class UDPServerMultiThreaded {
                 try {
                     line = stdin.readLine();
                     if(line.equals("save")) {
-                        history.saveToFile("history.ser");
+                        history.saveToFile("historyUDP.ser");
                     }
                     else {
                         System.out.println("Type 'save' in order to save the history of messages");
