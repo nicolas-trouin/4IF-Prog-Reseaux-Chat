@@ -7,7 +7,7 @@
 
 package Server.TCP;
 
-import util.Historique;
+import util.History;
 import util.Message;
 
 import java.net.*;
@@ -17,7 +17,7 @@ import java.util.Vector;
 public class TCPServerMultiThreaded {
 
 	private static List<ServerWritingThread> serverWritingThreadList = new Vector<>();
-	private static Historique historique;
+	private static History history;
 
     /**
      * main method
@@ -26,7 +26,7 @@ public class TCPServerMultiThreaded {
      **/
     public static synchronized void main(String args[]) {
         ServerSocket listenSocket;
-        historique = new Historique();
+        history = new History();
 
         if (args.length != 1) {
             System.out.println("Usage: java EchoServer <EchoServer port>");
@@ -38,7 +38,7 @@ public class TCPServerMultiThreaded {
             while (true) {
                 Socket clientSocket = listenSocket.accept();
                 System.out.println("Connexion from:" + clientSocket.getInetAddress());
-                ServerWritingThread writingThread = new ServerWritingThread(clientSocket, historique);
+                ServerWritingThread writingThread = new ServerWritingThread(clientSocket, history);
                 writingThread.start();
                 serverWritingThreadList.add(writingThread);
                 ServerListeningThread listeningThread = new ServerListeningThread(clientSocket, writingThread);
@@ -54,7 +54,7 @@ public class TCPServerMultiThreaded {
     }
 
     public static void addMessageToHistorique(Message message) {
-        historique.addMessage(message);
+        history.addMessage(message);
         //System.out.println(historique.getMessages());
     }
 }

@@ -8,6 +8,11 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+/**
+ * GUI for UDP client. Extends frame.
+ *
+ * @see java.awt.Frame
+ */
 public class ChatFrame extends Frame {
     Button validationButton = new Button();
     TextField messageField = new TextField();
@@ -17,6 +22,13 @@ public class ChatFrame extends Frame {
     private int serverPort;
     private String name = "anonymous";
 
+    /**
+     * Constructor with a datagram socket, Inet Adress and server port.
+     *
+     * @param serverSocket DatagramSocket
+     * @param serverHost   InetAdress
+     * @param serverPort   int that represents serverPort.
+     */
     public ChatFrame(DatagramSocket serverSocket, InetAddress serverHost, int serverPort) {
         this.serverSocket = serverSocket;
         this.serverHost = serverHost;
@@ -24,6 +36,9 @@ public class ChatFrame extends Frame {
         initialize();
     }
 
+    /**
+     * Initialization and actions for the frame.
+     */
     public void initialize() {
         this.setResizable(false);
         this.setLayout(null);
@@ -74,7 +89,6 @@ public class ChatFrame extends Frame {
                             }
                             displayText(response);
                         } else {
-
                             Message message = new Message(line, name);
 
                             objectOutputStream.writeObject(message);
@@ -90,6 +104,10 @@ public class ChatFrame extends Frame {
                 });
     }
 
+    /**
+     * Function used to display text.
+     * @param message Message that will be displayed.
+     */
     public void displayText(Message message) {
         displayArea.append(message + "\n");
     }

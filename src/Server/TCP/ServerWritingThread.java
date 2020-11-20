@@ -1,6 +1,6 @@
 package Server.TCP;
 
-import util.Historique;
+import util.History;
 import util.Message;
 
 import java.io.*;
@@ -10,12 +10,12 @@ import java.util.List;
 public class ServerWritingThread extends Thread {
 
     private Socket clientSocket;
-    private Historique historique;
+    private History history;
     private int newMessages = 0;
     private ObjectOutputStream socOut;
 
     public synchronized void addMessage(Message message) {
-        this.historique.addMessage(message);
+        this.history.addMessage(message);
         ++newMessages;
         this.notify();
     }
@@ -28,17 +28,17 @@ public class ServerWritingThread extends Thread {
                 e.printStackTrace();
             }
         }
-        return this.historique.getLastMessage(newMessages--);
+        return this.history.getLastMessage(newMessages--);
     }
 
-    ServerWritingThread(Socket s, Historique historique) {
+    ServerWritingThread(Socket s, History history) {
         this.clientSocket = s;
-        this.historique = new Historique(historique);
+        this.history = new History(history);
         init();
     }
 
     private void init() {
-        List<Message> messages = this.historique.getMessages();
+        List<Message> messages = this.history.getMessages();
         try {
             this.socOut = new ObjectOutputStream(clientSocket.getOutputStream());
             for (Message message : messages) {

@@ -1,6 +1,6 @@
 package Server.UDP;
 
-import util.Historique;
+import util.History;
 import util.Message;
 
 import java.io.ByteArrayOutputStream;
@@ -8,8 +8,6 @@ import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.Socket;
-import java.util.Arrays;
 
 public class ServerWritingThread
         extends Thread {
@@ -17,11 +15,11 @@ public class ServerWritingThread
     private final MulticastSocket multicastSocket;
     private final InetAddress multicastAddress;
     private final int multicastPort;
-    private Historique historique;
+    private History history;
     private int newMessages = 0;
 
     public synchronized void addMessage(Message message){
-        this.historique.addMessage(message);
+        this.history.addMessage(message);
         ++newMessages;
         this.notify();
     }
@@ -34,14 +32,14 @@ public class ServerWritingThread
                 e.printStackTrace();
             }
         }
-        return this.historique.getLastMessage(newMessages--);
+        return this.history.getLastMessage(newMessages--);
     }
 
-    ServerWritingThread(MulticastSocket multicastSocket, InetAddress multicastAddress, int multicastPort, Historique historique) {
+    ServerWritingThread(MulticastSocket multicastSocket, InetAddress multicastAddress, int multicastPort, History history) {
         this.multicastSocket = multicastSocket;
         this.multicastAddress = multicastAddress;
         this.multicastPort = multicastPort;
-        this.historique = historique;
+        this.history = history;
     }
 
     /**

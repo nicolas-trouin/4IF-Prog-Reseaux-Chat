@@ -11,6 +11,9 @@ import java.net.Socket;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Frame for displaying the chat
+ */
 public class ChatFrame extends Frame {
     Button validationButton = new Button();
     TextField messageField = new TextField();

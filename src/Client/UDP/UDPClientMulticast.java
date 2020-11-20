@@ -10,6 +10,9 @@ import java.util.List;
 
 import static java.lang.System.exit;
 
+/**
+ * Class for Multicast UDP
+ */
 public class UDPClientMulticast {
 
     private static MulticastSocket receiveSocket;

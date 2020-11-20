@@ -7,7 +7,7 @@
 
 package Server.UDP;
 
-import util.Historique;
+import util.History;
 
 import java.io.IOException;
 import java.net.*;
@@ -15,7 +15,7 @@ import java.net.*;
 public class UDPServerMultiThreaded {
 
     //    private static List<ServerWritingThread> serverWritingThreadList = new Vector<>();
-    private static Historique historique;
+    private static History history;
 
     /**
      * main method
@@ -23,7 +23,7 @@ public class UDPServerMultiThreaded {
      * @param args port
      **/
     public static synchronized void main(String args[]) {
-        historique = new Historique();
+        history = new History();
 
         if (args.length != 3) {
             System.out.println("Usage: java UDPServerMultiThreaded <Server port> <Multicast address> <Multicast port>");
@@ -36,7 +36,7 @@ public class UDPServerMultiThreaded {
             int multicastPort = Integer.parseInt(args[2]);
 
             MulticastSocket multicastSocket = new MulticastSocket();
-            ServerWritingThread serverWritingThread = new ServerWritingThread(multicastSocket, multicastAddress, multicastPort, historique);
+            ServerWritingThread serverWritingThread = new ServerWritingThread(multicastSocket, multicastAddress, multicastPort, history);
             serverWritingThread.start();
 
             DatagramSocket listeningSocket = new DatagramSocket(serverPort);
@@ -49,8 +49,8 @@ public class UDPServerMultiThreaded {
 
     }
 
-    public static Historique getHistorique() {
-        return historique;
+    public static History getHistorique() {
+        return history;
     }
 }
 
