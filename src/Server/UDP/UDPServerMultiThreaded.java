@@ -9,7 +9,9 @@ package Server.UDP;
 
 import util.History;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.*;
 
 public class UDPServerMultiThreaded {
@@ -23,7 +25,7 @@ public class UDPServerMultiThreaded {
      * @param args port
      **/
     public static synchronized void main(String args[]) {
-        history = new History();
+        history = new History("historyUDP.ser");
 
         if (args.length != 3) {
             System.out.println("Usage: java UDPServerMultiThreaded <Server port> <Multicast address> <Multicast port>");
@@ -42,11 +44,27 @@ public class UDPServerMultiThreaded {
             DatagramSocket listeningSocket = new DatagramSocket(serverPort);
             ServerListeningThread serverListeningThread = new ServerListeningThread(listeningSocket,serverWritingThread, multicastAddress, multicastPort);
             serverListeningThread.start();
+
+            // Saving history at "save" in stdin
+            BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+            String line;
+            while(true) {
+                try {
+                    line = stdin.readLine();
+                    if(line.equals("save")) {
+                        history.saveToFile("historyUDP.ser");
+                    }
+                    else {
+                        System.out.println("Type 'save' in order to save the history of messages");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public static History getHistorique() {

@@ -26,12 +26,16 @@ public class TCPServerMultiThreaded {
      **/
     public static synchronized void main(String args[]) {
         ServerSocket listenSocket;
-        history = new History();
+        history = new History("historyTCP.ser");
 
         if (args.length != 1) {
             System.out.println("Usage: java EchoServer <EchoServer port>");
             System.exit(1);
         }
+
+        ControlThread controlThread = new ControlThread(history);
+        controlThread.start();
+
         try {
             listenSocket = new ServerSocket(Integer.parseInt(args[0])); //port
             System.out.println("Server ready...");
