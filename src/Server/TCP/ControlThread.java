@@ -19,8 +19,11 @@ public class ControlThread extends Thread {
         while(true) {
             try {
                 line = stdin.readLine();
-                if(line.equals("quit")) {
+                if(line.equals("save")) {
                     history.saveToFile("history.ser");
+                }
+                else {
+                    System.out.println("Type 'save' in order to save the history of messages");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
