@@ -32,6 +32,10 @@ public class TCPServerMultiThreaded {
             System.out.println("Usage: java EchoServer <EchoServer port>");
             System.exit(1);
         }
+
+        ControlThread controlThread = new ControlThread(history);
+        controlThread.start();
+
         try {
             listenSocket = new ServerSocket(Integer.parseInt(args[0])); //port
             System.out.println("Server ready...");
