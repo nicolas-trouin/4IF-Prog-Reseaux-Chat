@@ -5,6 +5,10 @@ import util.Message;
 import java.io.*;
 import java.net.*;
 
+/**
+ * Class for Writing client-side, is threaded.
+ * @see java.lang.Thread
+ */
 public class ClientWritingThread extends Thread {
 
     private final DatagramSocket datagramSocket;
@@ -12,6 +16,12 @@ public class ClientWritingThread extends Thread {
     private final int serverPort;
     private String name = "anonymous";
 
+    /**
+     * Constructor for the client-side writing thread.
+     * @param datagramSocket DatagramSocket
+     * @param serverHost InetAdress for the server host.
+     * @param serverPort int for the server port.
+     */
     public ClientWritingThread(DatagramSocket datagramSocket, InetAddress serverHost, int serverPort) {
         this.datagramSocket = datagramSocket;
         this.serverHost = serverHost;
@@ -20,8 +30,10 @@ public class ClientWritingThread extends Thread {
     }
 
     /**
-     * receives a request from client then sends an echo to the client
-     **/
+     * Runnable aspect of the thread.
+     * Recieves a request from client then sends an echo to the client.
+     * @see java.lang.Runnable
+     */
     public void run() {
         try {
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));

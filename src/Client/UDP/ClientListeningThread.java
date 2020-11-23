@@ -9,16 +9,29 @@ import java.net.MulticastSocket;
 import java.net.Socket;
 import java.util.Arrays;
 
+/**
+ * Class for Listening client-side, is threaded.
+ * @see java.lang.Thread
+ */
 public class ClientListeningThread extends Thread {
 
     private final MulticastSocket multicastSocket;
     private ChatFrame chatFrame;
 
+    /**
+     * Constructor of the Listening client-side given a socket and a chat frame
+     * @param s Socket
+     * @param chatFrame Chat Frame
+     */
     ClientListeningThread(MulticastSocket s, ChatFrame chatFrame) {
         this.multicastSocket = s;
         this.chatFrame = chatFrame;
     }
 
+    /**
+     * Runnable aspect of the thread.
+     * @see java.lang.Runnable
+     **/
     public void run() {
         try {
             Message message;

@@ -14,15 +14,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 
+/**
+ * Main class for the TCP server-side.
+ */
 public class UDPServerMultiThreaded {
 
     //    private static List<ServerWritingThread> serverWritingThreadList = new Vector<>();
     private static History history;
 
     /**
-     * main method
+     * Main method of the class.
      *
-     * @param args port
+     * @param args arguments (String[])
      **/
     public static synchronized void main(String args[]) {
         history = new History("historyUDP.ser");
@@ -67,6 +70,10 @@ public class UDPServerMultiThreaded {
         }
     }
 
+    /**
+     * Getter of history.
+     * @return History.
+     */
     public static History getHistorique() {
         return history;
     }

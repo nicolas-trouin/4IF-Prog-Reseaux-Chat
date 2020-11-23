@@ -9,8 +9,11 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-public class ServerWritingThread
-        extends Thread {
+/**
+ * Class for Writing client-side, is threaded.
+ * @see java.lang.Thread
+ */
+public class ServerWritingThread extends Thread {
 
     private final MulticastSocket multicastSocket;
     private final InetAddress multicastAddress;
@@ -18,12 +21,20 @@ public class ServerWritingThread
     private History history;
     private int newMessages = 0;
 
+    /**
+     * Function that adds a message to the history and notifies it.
+     * @param message Message to be added.
+     */
     public synchronized void addMessage(Message message){
         this.history.addMessage(message);
         ++newMessages;
         this.notify();
     }
 
+    /**
+     * Getter for the last message.
+     * @return Message
+     */
     private synchronized Message getMessage(){
         while(newMessages == 0){
             try {
@@ -35,6 +46,13 @@ public class ServerWritingThread
         return this.history.getLastMessage(newMessages--);
     }
 
+    /**
+     * Constructor of the class, given a multicast socket, an adress, a port, and an history.
+     * @param multicastSocket Multicast socket
+     * @param multicastAddress InetAdress (adress)
+     * @param multicastPort int (port)
+     * @param history History
+     */
     ServerWritingThread(MulticastSocket multicastSocket, InetAddress multicastAddress, int multicastPort, History history) {
         this.multicastSocket = multicastSocket;
         this.multicastAddress = multicastAddress;
@@ -43,8 +61,9 @@ public class ServerWritingThread
     }
 
     /**
-     * receives a request from client then sends an echo to the client
-     **/
+     * Runnable aspect of the class.
+     * @see java.lang.Runnable
+     */
     public synchronized void run() {
         try {
             while (true) {

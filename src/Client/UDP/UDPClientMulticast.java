@@ -11,7 +11,7 @@ import java.util.List;
 import static java.lang.System.exit;
 
 /**
- * Class for Multicast UDP
+ * Main class for Multicast UDP
  */
 public class UDPClientMulticast {
 
@@ -20,6 +20,12 @@ public class UDPClientMulticast {
     private static InetAddress groupAddress;
     private static int groupPort;
 
+    /**
+     * Main method of the main class.
+     * accepts a connection, receives a message from client then sends an echo to the client
+     * @param args Arguments (String[])
+     * @throws IOException Exception thrown.
+     */
     public static void main(String[] args) throws IOException {
 
         if (args.length != 2) {

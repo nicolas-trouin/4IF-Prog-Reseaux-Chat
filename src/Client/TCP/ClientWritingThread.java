@@ -5,17 +5,26 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
+/**
+ * Class for Writing client-side, is threaded.
+ * @see java.lang.Thread
+ */
 public class ClientWritingThread extends Thread {
-
     private Socket serverSocket;
 
+    /**
+     * Constructor for the class, given a socket.
+     * @param s Socket.
+     */
     ClientWritingThread(Socket s) {
         this.serverSocket = s;
     }
 
     /**
-     * receives a request from client then sends an echo to the client
-     **/
+     * Runnable aspect of the thread.
+     * Recieves a request from client then sends an echo to the client.
+     * @see java.lang.Runnable
+     */
     public void run() {
         try {
             PrintStream socOut = new PrintStream(serverSocket.getOutputStream());
