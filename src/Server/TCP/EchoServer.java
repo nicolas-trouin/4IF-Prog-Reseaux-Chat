@@ -10,12 +10,14 @@ package Server.TCP;
 import java.io.*;
 import java.net.*;
 
+/**
+ * Class respresenting an echo from the server to the client.
+ */
 public class EchoServer {
 
     /**
-     * receives a request from client then sends an echo to the client
-     *
-     * @param clientSocket the client socket
+     * Receives a request from client then sends an echo to the client
+     * @param clientSocket Client socket
      **/
     static void doService(Socket clientSocket) {
         try {
@@ -34,8 +36,9 @@ public class EchoServer {
     }
 
     /**
-     * main method
-     **/
+     * Main method for the class.
+     * @param args Arguments (String[])
+     */
     public static void main(String args[]) {
         ServerSocket listenSocket;
 

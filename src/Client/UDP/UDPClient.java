@@ -14,12 +14,16 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.*;
 
-
+/**
+ * Main class for the UDP part, client-side.
+ */
 public class UDPClient {
     /**
-     * main method
+     * Main method of the main class.
      * accepts a connection, receives a message from client then sends an echo to the client
-     **/
+     * @param args Arguments (String[])
+     * @throws IOException Exception thrown.
+     */
     public static void main(String[] args) throws IOException {
 
         if (args.length != 2) {

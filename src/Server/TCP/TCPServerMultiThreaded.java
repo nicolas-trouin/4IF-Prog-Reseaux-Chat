@@ -14,15 +14,18 @@ import java.net.*;
 import java.util.List;
 import java.util.Vector;
 
+/**
+ * Main class for the TCP server-side.
+ */
 public class TCPServerMultiThreaded {
 
 	private static List<ServerWritingThread> serverWritingThreadList = new Vector<>();
 	private static History history;
 
     /**
-     * main method
+     * Main method of the class.
      *
-     * @param args port
+     * @param args arguments (String[])
      **/
     public static synchronized void main(String args[]) {
         ServerSocket listenSocket;
@@ -53,11 +56,19 @@ public class TCPServerMultiThreaded {
         }
     }
 
+    /**
+     * Getter for the thread list.
+     * @return List of ServerWritingThread.
+     */
     public static List<ServerWritingThread> getServerWritingThreads() {
         return serverWritingThreadList;
     }
 
-    public static void addMessageToHistorique(Message message) {
+    /**
+     * Function to add a message to history.
+     * @param message Message to be added.
+     */
+    public static void addMessageToHistory(Message message) {
         history.addMessage(message);
         //System.out.println(historique.getMessages());
     }

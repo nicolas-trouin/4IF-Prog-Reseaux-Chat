@@ -11,12 +11,16 @@ import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.*;
 
-
+/**
+ * Main class for the TCP part, client-side.
+ */
 public class TCPClient {
     /**
-     * main method
-     * accepts a connection, receives a message from client then sends an echo to the client
-     **/
+     * Main method of the main class.
+     * Accepts a connection, receives a message from client then sends an echo to the client
+     * @param args Aguments (String[])
+     * @throws IOException Exception thrown for I/O.
+     */
     public static void main(String[] args) throws IOException {
 
         Socket serverSocket = null;

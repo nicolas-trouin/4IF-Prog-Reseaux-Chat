@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Frame for displaying the chat
+ * @see java.awt.Frame
  */
 public class ChatFrame extends Frame {
     Button validationButton = new Button();
@@ -20,11 +21,18 @@ public class ChatFrame extends Frame {
     TextArea displayArea = new TextArea();
     Socket serverSocket;
 
+    /**
+     * Constructor for the chat frame given a socket.
+     * @param serverSocket Socket.
+     */
     public ChatFrame(Socket serverSocket) {
         this.serverSocket = serverSocket;
         initialize();
     }
 
+    /**
+     * Initialization of the chat frame
+     */
     public void initialize() {
         this.setResizable(false);
         this.setLayout(null);
@@ -63,6 +71,10 @@ public class ChatFrame extends Frame {
                 });
     }
 
+    /**
+     * Function to display text.
+     * @param message Message to display.
+     */
     public void displayText(Message message) {
         displayArea.append(message + "\n");
     }

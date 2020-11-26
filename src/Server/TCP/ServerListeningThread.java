@@ -12,21 +12,31 @@ import util.Message;
 import java.io.*;
 import java.net.*;
 
+/**
+ * Class for Listening server-side, is threaded.
+ * @see java.lang.Thread
+ */
 public class ServerListeningThread extends Thread {
 
     private final Socket clientSocket;
     private String senderName = "anonymous";
     private final ServerWritingThread writingThread;
 
+    /**
+     * Constructor given a socket and a ServerWritingThread.
+     * @param s Socket
+     * @param writingThread ServerWritingThread
+     */
     ServerListeningThread(Socket s, ServerWritingThread writingThread) {
         this.clientSocket = s;
         this.writingThread = writingThread;
     }
 
     /**
-     * receives a request from client then sends an echo to the client
-     *
-	 **/
+     * Runnable aspect of the class.
+     * Receives a request from client then sends an echo to the client.
+     * @see java.lang.Runnable
+     */
     public synchronized void run() {
         try {
             BufferedReader socIn = null;
@@ -56,7 +66,7 @@ public class ServerListeningThread extends Thread {
                 }
                 else {
                     Message message = new Message(line, senderName);
-                    TCPServerMultiThreaded.addMessageToHistorique(message);
+                    TCPServerMultiThreaded.addMessageToHistory(message);
                     for (ServerWritingThread serverWritingThread : TCPServerMultiThreaded.getServerWritingThreads()) {
                         serverWritingThread.addMessage(message);
                     }
