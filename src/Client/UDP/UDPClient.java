@@ -1,17 +1,6 @@
-/***
- * TCPClient
- * Example of a TCP client 
- * Date: 10/01/04
- * Authors:
- */
 package Client.UDP;
 
-import Client.TCP.ClientListeningThread;
-import Client.TCP.ClientWritingThread;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.*;
 
 /**
