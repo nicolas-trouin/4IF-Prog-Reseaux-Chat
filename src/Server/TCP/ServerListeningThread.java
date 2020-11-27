@@ -57,7 +57,7 @@ public class ServerListeningThread extends Thread {
                         }
                     }
                     else if(command[0].equals("/help")){
-                        response = new Message("WRITE HELP MESSAGE HERE", "[SERVER]"); //TODO Write help message
+                        response = new Message("Write a message and press Send. /renames to rename yourself. /help to see this message again.", "[SERVER]");
                     }
                     else {
                         response = new Message("Syntax error. Try /help to get help.", "[SERVER]");

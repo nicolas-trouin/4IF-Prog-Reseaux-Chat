@@ -94,28 +94,6 @@ public class ServerListeningThread extends Thread {
                         else {
                             writingThread.addMessage(message);
                         }
-
-                        /*
-                        if (content.charAt(0) == '/') {
-                            Message response;
-                            String[] command = content.split(" ");
-                            if (command[0].equals("/rename")) {
-                                if (command.length != 2) {
-                                    response = new Message("Syntax error. Try /rename <name>.", "[SERVER]");
-                                } else {
-                                    senderName = command[1];
-                                    response = new Message("Your name has been changed to " + senderName + ".", "[SERVER]");
-                                }
-                            } else if (command[0].equals("/help")) {
-                                response = new Message("WRITE HELP MESSAGE HERE", "[SERVER]"); //TODO Write help message
-                            } else {
-                                response = new Message("Syntax error. Try /help to get help.", "[SERVER]");
-                            }
-                            writingThread.addMessage(response);
-                        } else {
-                            writingThread.addMessage(message);
-                        }
-                        */
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }

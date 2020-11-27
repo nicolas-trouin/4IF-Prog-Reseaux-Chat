@@ -83,7 +83,7 @@ public class ChatFrame extends Frame {
                                     response = new Message("Your name has been changed to " + name + ".", "[INFO]");
                                 }
                             } else if (command[0].equals("/help")) {
-                                response = new Message("WRITE HELP MESSAGE HERE", "[INFO]"); //TODO Write help message
+                                response = new Message("Write a message and press Send. /renames to rename yourself. /help to see this message again.", "[INFO]");
                             } else {
                                 response = new Message("Syntax error. Try /help to get help.", "[INFO]");
                             }
